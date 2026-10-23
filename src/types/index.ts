@@ -7,6 +7,12 @@ export interface LocalizedString {
   ru: string;
 }
 
+export interface UserProfile {
+  name: string;
+  phone: string;
+  title?: string;
+}
+
 export interface MaterialDef {
   id: string;
   name: LocalizedString;

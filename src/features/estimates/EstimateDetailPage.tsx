@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { getEstimate, deleteEstimate } from '../../lib/db';
 import { computeEstimate, formatUZS } from '../../lib/calc';
 import { generatePDF } from '../../lib/pdf';
-import type { Estimate } from '../../types';
+import { getUserProfile } from '../../lib/profile';
+import { shareEstimate, openTelegramShare, buildEstimateShareText } from '../../lib/share';
+import type { Estimate, UserProfile } from '../../types';
 
 export default function EstimateDetailPage() {
   const { t, i18n } = useTranslation();
@@ -13,7 +15,9 @@ export default function EstimateDetailPage() {
   const lang = i18n.language as 'uz' | 'ru';
 
   const [estimate, setEstimate] = useState<Estimate | null>(null);
+  const [profile, setProfile] = useState<UserProfile>(getUserProfile);
   const [exporting, setExporting] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -21,7 +25,13 @@ export default function EstimateDetailPage() {
       if (est) setEstimate(computeEstimate(est));
       else navigate('/', { replace: true });
     });
-  }, [id]);
+    setProfile(getUserProfile());
+  }, [id, navigate]);
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2500);
+  };
 
   const handleDelete = async () => {
     if (!id) return;
@@ -34,9 +44,39 @@ export default function EstimateDetailPage() {
     if (!estimate) return;
     setExporting(true);
     try {
-      await generatePDF(estimate, lang);
+      await generatePDF(estimate, lang, profile);
     } finally {
       setExporting(false);
+    }
+  };
+
+  const handleShare = async () => {
+    if (!estimate) return;
+    setExporting(true);
+    try {
+      const res = await shareEstimate(estimate, lang);
+      if (res === 'fallback') {
+        // Fallback to copying text
+        await handleCopyText();
+      }
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  const handleTelegramShare = () => {
+    if (!estimate) return;
+    openTelegramShare(estimate, lang);
+  };
+
+  const handleCopyText = async () => {
+    if (!estimate) return;
+    const text = buildEstimateShareText(estimate, lang, profile);
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast(t('share.copiedToast'));
+    } catch {
+      showToast(t('share.copiedToast'));
     }
   };
 
@@ -45,7 +85,15 @@ export default function EstimateDetailPage() {
   const totalArea = (estimate.totalWallArea ?? 0) + (estimate.totalCeilingArea ?? 0);
 
   return (
-    <div style={{ paddingBottom: 32 }}>
+    <div style={{ paddingBottom: 40 }}>
+      {/* Toast Notification */}
+      {toast && (
+        <div className="toast">
+          <span>✅</span>
+          <span>{toast}</span>
+        </div>
+      )}
+
       {/* Back */}
       <button className="btn btn-ghost" onClick={() => navigate(-1)} style={{ marginBottom: 12 }}>
         ← {t('estimate.back')}
@@ -61,6 +109,11 @@ export default function EstimateDetailPage() {
             {estimate.address && (
               <div className="text-muted" style={{ fontSize: '0.9rem' }}>📍 {estimate.address}</div>
             )}
+            {profile.name && (
+              <div className="text-primary fw-bold" style={{ fontSize: '0.85rem', marginTop: 4 }}>
+                👷 {t('profile.title')}: {profile.name} {profile.phone ? `(${profile.phone})` : ''}
+              </div>
+            )}
             <div className="text-muted" style={{ fontSize: '0.8rem', marginTop: 4 }}>
               {t('estimate.createdAt')}: {new Date(estimate.createdAt).toLocaleDateString(lang === 'uz' ? 'uz-UZ' : 'ru-RU')}
             </div>
@@ -74,32 +127,29 @@ export default function EstimateDetailPage() {
       {/* Rooms summary */}
       <div className="card mt-12">
         <h2 style={{ marginBottom: 12 }}>🚪 {t('estimate.rooms')}</h2>
-        {estimate.rooms.map((room, i) => {
-          const wallArea = (estimate.totalWallArea ?? 0); // approximate for display
-          return (
-            <div key={room.id} style={{
-              padding: '10px 0',
-              borderBottom: i < estimate.rooms.length - 1 ? '1px solid var(--color-border-light)' : 'none',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-              <div>
-                <div style={{ fontWeight: 600 }}>
-                  {room.name || `${t('room.title')} ${i + 1}`}
-                </div>
-                <div className="text-muted" style={{ fontSize: '0.82rem' }}>
-                  {room.length}×{room.width}×{room.height}m
-                  {' · '}
-                  {room.doors} {lang === 'uz' ? 'eshik' : 'дв.'}
-                  {', '}
-                  {room.windows} {lang === 'uz' ? 'deraza' : 'окн.'}
-                  {room.includeCeiling ? (lang === 'uz' ? ' · shift ✓' : ' · потолок ✓') : ''}
-                </div>
+        {estimate.rooms.map((room, i) => (
+          <div key={room.id} style={{
+            padding: '10px 0',
+            borderBottom: i < estimate.rooms.length - 1 ? '1px solid var(--color-border-light)' : 'none',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+            <div>
+              <div style={{ fontWeight: 600 }}>
+                {room.name || `${t('room.title')} ${i + 1}`}
+              </div>
+              <div className="text-muted" style={{ fontSize: '0.82rem' }}>
+                {room.length}×{room.width}×{room.height}m
+                {' · '}
+                {room.doors} {lang === 'uz' ? 'eshik' : 'дв.'}
+                {', '}
+                {room.windows} {lang === 'uz' ? 'deraza' : 'окн.'}
+                {room.includeCeiling ? (lang === 'uz' ? ' · shift ✓' : ' · потолок ✓') : ''}
               </div>
             </div>
-          );
-        })}
+          </div>
+        ))}
 
         <div style={{
           marginTop: 12,
@@ -171,16 +221,49 @@ export default function EstimateDetailPage() {
       {/* Disclaimer */}
       <div className="disclaimer mt-12">{t('estimate.disclaimer')}</div>
 
-      {/* Actions */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 20 }}>
+      {/* Customer Send / Telegram Integration Section */}
+      <div className="card mt-16" style={{ background: 'var(--color-primary-bg)', borderColor: 'var(--color-primary)' }}>
+        <h3 style={{ marginBottom: 4, color: 'var(--color-primary-dark)' }}>
+          📤 {t('share.sectionTitle')}
+        </h3>
+        <p className="text-muted" style={{ fontSize: '0.85rem', marginBottom: 12 }}>
+          {t('share.sectionDesc')}
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+          <button
+            className="btn btn-telegram btn-sm"
+            onClick={handleTelegramShare}
+          >
+            ✈️ {t('share.telegram')}
+          </button>
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={handleCopyText}
+          >
+            📋 {t('share.copyText')}
+          </button>
+        </div>
+
+        <div style={{ marginTop: 8 }}>
+          <button
+            className="btn btn-primary btn-full"
+            onClick={handleShare}
+            disabled={exporting}
+          >
+            {exporting ? '⏳ ...' : `📤 ${t('share.nativeShare')}`}
+          </button>
+        </div>
+      </div>
+
+      {/* Export & Delete Actions */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 12 }}>
         <button
-          className="btn btn-primary btn-full"
+          className="btn btn-outline btn-full"
           onClick={handleExportPDF}
           disabled={exporting}
         >
-          {exporting
-            ? (lang === 'uz' ? 'PDF tayyorlanmoqda...' : 'Генерация PDF...')
-            : `📄 ${t('estimate.share')}`}
+          {exporting ? '⏳ ...' : `📄 ${t('share.downloadPdf')}`}
         </button>
         <button className="btn btn-danger btn-full" onClick={handleDelete}>
           🗑 {t('estimate.delete')}

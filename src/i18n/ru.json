@@ -12,6 +12,28 @@
     "emptyHint": "Создайте свою первую смету",
     "newEstimate": "Новая смета"
   },
+  "profile": {
+    "title": "Профиль мастера",
+    "button": "Профиль",
+    "hint": "Эти данные будут отображаться в смете и PDF-документах.",
+    "nameLabel": "Имя и фамилия / Прозвище",
+    "namePlaceholder": "Напр.: Мастер Бобур",
+    "phoneLabel": "Номер телефона",
+    "phonePlaceholder": "+998 90 123 45 67",
+    "specialtyLabel": "Специализация (необязательно)",
+    "specialtyPlaceholder": "Напр.: Бригада мастеров по отделке",
+    "save": "Сохранить",
+    "cancel": "Отмена"
+  },
+  "share": {
+    "sectionTitle": "Отправить клиенту",
+    "sectionDesc": "Отправьте смету через Telegram или скачайте в формате PDF",
+    "nativeShare": "Поделиться (PDF и текст)",
+    "telegram": "Отправить в Telegram",
+    "copyText": "Скопировать текст",
+    "downloadPdf": "Скачать PDF",
+    "copiedToast": "Скопировано! Можно вставить в Telegram"
+  },
   "estimate": {
     "clientName": "Имя клиента (необязательно)",
     "address": "Адрес (необязательно)",

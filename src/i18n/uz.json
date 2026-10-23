@@ -12,6 +12,28 @@
     "emptyHint": "Birinchi smetangizni yarating",
     "newEstimate": "Yangi smeta"
   },
+  "profile": {
+    "title": "Usta profili",
+    "button": "Profil",
+    "hint": "Ushbu ma'lumotlar hisob-kitob qilingan smeta va PDF hujjatlarida chiqadi.",
+    "nameLabel": "Ism-familiya / Taxallus",
+    "namePlaceholder": "Masalan: Usta Bobur",
+    "phoneLabel": "Telefon raqami",
+    "phonePlaceholder": "+998 90 123 45 67",
+    "specialtyLabel": "Mutaxassislik / Soha (ixtiyoriy)",
+    "specialtyPlaceholder": "Masalan: Devor va pol ustalari brigadasi",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish"
+  },
+  "share": {
+    "sectionTitle": "Mijozga yuborish",
+    "sectionDesc": "Smetani Telegram orqali yuboring yoki PDF yuklab oling",
+    "nativeShare": "Ulashish (PDF va xulosa)",
+    "telegram": "Telegramga yuborish",
+    "copyText": "Matnni nusxalash",
+    "downloadPdf": "PDF yuklab olish",
+    "copiedToast": "Nusxalandi! Telegramga qo'yishingiz mumkin"
+  },
   "estimate": {
     "clientName": "Mijoz ismi (ixtiyoriy)",
     "clientNamePlaceholder": "Masalan: Alisher",

@@ -1,20 +1,25 @@
 import jsPDF from 'jspdf';
-import type { Estimate } from '../../types';
+import type { Estimate, UserProfile } from '../../types';
 import { formatUZS } from '../calc';
+import { getUserProfile } from '../profile';
 
 /**
- * Generate a PDF for the given estimate and trigger browser download.
- * Works fully offline.
+ * Creates and formats a jsPDF document for the given estimate and master profile.
  */
-export async function generatePDF(estimate: Estimate, lang: 'uz' | 'ru' = 'uz'): Promise<void> {
+export function createPDFDocument(
+  estimate: Estimate,
+  lang: 'uz' | 'ru' = 'uz',
+  profile?: UserProfile
+): { doc: jsPDF; filename: string } {
+  const userProfile = profile || getUserProfile();
   const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
 
   const pageW = doc.internal.pageSize.getWidth();
   const margin = 14;
-  let y = 20;
+  let y = 18;
 
   const labelColor: [number, number, number] = [100, 100, 100];
-  const headerColor: [number, number, number] = [30, 90, 60];
+  const headerColor: [number, number, number] = [26, 110, 60];
   const lineColor: [number, number, number] = [220, 220, 220];
 
   function line() {
@@ -26,7 +31,7 @@ export async function generatePDF(estimate: Estimate, lang: 'uz' | 'ru' = 'uz'):
   function checkPage(needed = 10) {
     if (y + needed > 275) {
       doc.addPage();
-      y = 20;
+      y = 18;
     }
   }
 
@@ -34,15 +39,34 @@ export async function generatePDF(estimate: Estimate, lang: 'uz' | 'ru' = 'uz'):
   doc.setFontSize(20);
   doc.setTextColor(...headerColor);
   doc.text('Usta Smeta', margin, y);
-  y += 8;
 
+  const dateStr = new Date(estimate.createdAt).toLocaleDateString(lang === 'uz' ? 'uz-UZ' : 'ru-RU');
   doc.setFontSize(10);
   doc.setTextColor(...labelColor);
-  const dateStr = new Date(estimate.createdAt).toLocaleDateString('uz-UZ');
-  doc.text(lang === 'uz' ? `Sana: ${dateStr}` : `Дата: ${dateStr}`, margin, y);
-  y += 5;
+  doc.text(lang === 'uz' ? `Sana: ${dateStr}` : `Дата: ${dateStr}`, pageW - margin, y, { align: 'right' });
+  y += 8;
 
+  // Master profile info
+  if (userProfile.name) {
+    doc.setFontSize(11);
+    doc.setTextColor(30, 30, 30);
+    const ustaLabel = lang === 'uz' ? 'Usta' : 'Мастер';
+    const phonePart = userProfile.phone ? ` · 📞 ${userProfile.phone}` : '';
+    doc.text(`👷 ${ustaLabel}: ${userProfile.name}${phonePart}`, margin, y);
+    y += 5;
+
+    if (userProfile.title) {
+      doc.setFontSize(9);
+      doc.setTextColor(...labelColor);
+      doc.text(userProfile.title, margin + 6, y);
+      y += 5;
+    }
+  }
+
+  // Client info
   if (estimate.clientName) {
+    doc.setFontSize(10);
+    doc.setTextColor(40, 40, 40);
     doc.text(
       lang === 'uz' ? `Mijoz: ${estimate.clientName}` : `Клиент: ${estimate.clientName}`,
       margin,
@@ -51,6 +75,8 @@ export async function generatePDF(estimate: Estimate, lang: 'uz' | 'ru' = 'uz'):
     y += 5;
   }
   if (estimate.address) {
+    doc.setFontSize(10);
+    doc.setTextColor(...labelColor);
     doc.text(
       lang === 'uz' ? `Manzil: ${estimate.address}` : `Адрес: ${estimate.address}`,
       margin,
@@ -199,7 +225,34 @@ export async function generatePDF(estimate: Estimate, lang: 'uz' | 'ru' = 'uz'):
       : '⚠ Нормы приблизительные. Уточните у мастера.';
   doc.text(disclaimer, margin, y, { maxWidth: pageW - 2 * margin });
 
-  // ---- Save ----
-  const filename = `smeta_${estimate.clientName || estimate.id.slice(0, 8)}_${dateStr.replace(/\./g, '-')}.pdf`;
+  const safeClient = (estimate.clientName || estimate.id.slice(0, 8)).replace(/[^a-zA-Z0-9_\u0400-\u04FF]/g, '_');
+  const filename = `smeta_${safeClient}_${dateStr.replace(/\./g, '-')}.pdf`;
+
+  return { doc, filename };
+}
+
+/**
+ * Generate a PDF for the given estimate and trigger browser download.
+ */
+export async function generatePDF(
+  estimate: Estimate,
+  lang: 'uz' | 'ru' = 'uz',
+  profile?: UserProfile
+): Promise<void> {
+  const { doc, filename } = createPDFDocument(estimate, lang, profile);
   doc.save(filename);
+}
+
+/**
+ * Generate a PDF Blob and File object for sharing via Web Share API.
+ */
+export async function generatePDFBlob(
+  estimate: Estimate,
+  lang: 'uz' | 'ru' = 'uz',
+  profile?: UserProfile
+): Promise<{ file: File; filename: string }> {
+  const { doc, filename } = createPDFDocument(estimate, lang, profile);
+  const blob = doc.output('blob');
+  const file = new File([blob], filename, { type: 'application/pdf' });
+  return { file, filename };
 }

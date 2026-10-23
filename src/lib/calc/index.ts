@@ -1,7 +1,7 @@
 // ============================================================
 // PURE CALCULATION FUNCTIONS — unit-tested, no side-effects
 // ============================================================
-import type { Room, MaterialLine, Estimate, MaterialDef, JobTypeDef } from '../types';
+import type { Room, MaterialLine, Estimate, MaterialDef, JobTypeDef } from '../../types';
 
 // Default door/window area constants (can be overridden per room)
 export const DEFAULT_DOOR_AREA = 1.9;   // m² (PLACEHOLDER — verify with master)
