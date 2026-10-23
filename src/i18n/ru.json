@@ -1,0 +1,79 @@
+{
+  "app": {
+    "title": "Usta Smeta",
+    "tagline": "Смета — быстро и легко"
+  },
+  "nav": {
+    "estimates": "Сметы",
+    "newEstimate": "Новая смета"
+  },
+  "home": {
+    "empty": "Смет пока нет",
+    "emptyHint": "Создайте свою первую смету",
+    "newEstimate": "Новая смета"
+  },
+  "estimate": {
+    "clientName": "Имя клиента (необязательно)",
+    "address": "Адрес (необязательно)",
+    "jobType": "Тип работы",
+    "rooms": "Комнаты",
+    "addRoom": "Добавить комнату",
+    "totalArea": "Общая площадь",
+    "materials": "Материалы",
+    "labor": "Стоимость работ",
+    "laborPerM2": "Стоимость работ (за 1 м²)",
+    "total": "Итого",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "duplicate": "Дублировать",
+    "share": "Отправить PDF",
+    "save": "Сохранить",
+    "back": "Назад",
+    "createdAt": "Создано",
+    "disclaimer": "⚠️ Нормы приблизительные. Уточните у мастера.",
+    "unsavedDraft": "Несохранённый черновик",
+    "noClient": "Клиент не указан",
+    "confirmDelete": "Удалить смету?",
+    "saving": "Сохранение...",
+    "clientNamePlaceholder": "Напр.: Алишер",
+    "addressPlaceholder": "Напр.: Чиланзар, кв. 9"
+  },
+  "room": {
+    "title": "Комната",
+    "nameLabel": "Название комнаты (необязательно)",
+    "namePlaceholder": "Напр.: Гостиная",
+    "length": "Длина (м)",
+    "width": "Ширина (м)",
+    "height": "Высота (м)",
+    "paintArea": "Площадь покраски",
+    "doors": "Кол-во дверей",
+    "windows": "Кол-во окон",
+    "doorArea": "Площадь 1 двери (м²)",
+    "windowArea": "Площадь 1 окна (м²)",
+    "wallArea": "Площадь стен",
+    "ceilingArea": "Площадь потолка",
+    "remove": "Удалить",
+    "addCeiling": "Учесть потолок"
+  },
+  "material": {
+    "name": "Название",
+    "consumption": "Норма (ед/м²)",
+    "consumptionHeader": "Норм/м²",
+    "packages": "Кол-во упаковок",
+    "packageSize": "Размер упаковки",
+    "pricePerPackage": "Цена упаковки (сум)",
+    "total": "Итого (сум)"
+  },
+  "jobType": {
+    "putty_and_paint_walls": "Шпаклёвка и покраска"
+  },
+  "currency": "сум",
+  "errors": {
+    "required": "Обязательное поле",
+    "positive": "Введите положительное число"
+  },
+  "pwa": {
+    "updateAvailable": "Доступна новая версия",
+    "reload": "Обновить"
+  }
+}

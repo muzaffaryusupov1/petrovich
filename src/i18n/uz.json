@@ -1,0 +1,79 @@
+{
+  "app": {
+    "title": "Usta Smeta",
+    "tagline": "Smeta — tez va oson"
+  },
+  "nav": {
+    "estimates": "Smetalar",
+    "newEstimate": "Yangi smeta"
+  },
+  "home": {
+    "empty": "Hozircha smeta yo'q",
+    "emptyHint": "Birinchi smetangizni yarating",
+    "newEstimate": "Yangi smeta"
+  },
+  "estimate": {
+    "clientName": "Mijoz ismi (ixtiyoriy)",
+    "clientNamePlaceholder": "Masalan: Alisher",
+    "addressPlaceholder": "Masalan: Chilonzor, 9-kv.",
+    "address": "Manzil (ixtiyoriy)",
+    "jobType": "Ish turi",
+    "rooms": "Xonalar",
+    "addRoom": "Xona qo'shish",
+    "totalArea": "Jami maydon",
+    "materials": "Materiallar",
+    "labor": "Ish haqi",
+    "laborPerM2": "Ish haqi (1 m² uchun)",
+    "total": "Jami",
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "duplicate": "Nusxa olish",
+    "share": "PDF yuborish",
+    "save": "Saqlash",
+    "back": "Orqaga",
+    "createdAt": "Yaratilgan",
+    "disclaimer": "⚠️ Normalar taxminiy. Ustadan tasdiqlash oling.",
+    "unsavedDraft": "Saqlanmagan loyiha",
+    "noClient": "Mijoz ko'rsatilmagan",
+    "confirmDelete": "O'chirishga ishonchingiz komilmi?",
+    "saving": "Saqlanmoqda..."
+  },
+  "room": {
+    "title": "Xona",
+    "nameLabel": "Xona nomi (ixtiyoriy)",
+    "namePlaceholder": "Masalan: Mehmonxona",
+    "length": "Uzunlik (m)",
+    "width": "Kenglik (m)",
+    "height": "Balandlik (m)",
+    "paintArea": "Bo'yash maydoni",
+    "doors": "Eshik soni",
+    "windows": "Deraza soni",
+    "doorArea": "1 eshik maydoni (m²)",
+    "windowArea": "1 deraza maydoni (m²)",
+    "wallArea": "Devor maydoni",
+    "ceilingArea": "Shift maydoni",
+    "remove": "Olib tashlash",
+    "addCeiling": "Shiftni ham hisoblash"
+  },
+  "material": {
+    "name": "Nomi",
+    "consumption": "Me'yor (birlik/m²)",
+    "consumptionHeader": "Me'yor/m²",
+    "packages": "Paket soni",
+    "packageSize": "Paket hajmi",
+    "pricePerPackage": "Paket narxi (so'm)",
+    "total": "Jami (so'm)"
+  },
+  "jobType": {
+    "putty_and_paint_walls": "Shpaklyovka va bo'yash"
+  },
+  "currency": "so'm",
+  "errors": {
+    "required": "Majburiy maydon",
+    "positive": "Musbat son kiriting"
+  },
+  "pwa": {
+    "updateAvailable": "Yangi versiya mavjud",
+    "reload": "Yangilash"
+  }
+}
