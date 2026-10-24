@@ -1,0 +1,50 @@
+{
+  "id": "tiling_walls_and_floors",
+  "name": { "uz": "Kafel va plitka yotqizish", "ru": "Укладка плитки и кафеля" },
+  "icon": "🧱",
+  "description": {
+    "uz": "Devor va polga kafel, plitka yoki keramogranit yotqizish",
+    "ru": "Укладка плитки, кафеля или керамогранита на стены и пол"
+  },
+  "unit": "m2",
+  "materials": [
+    {
+      "id": "tile_adhesive",
+      "name": { "uz": "Plitka kleyi (qop)", "ru": "Плиточный клей (мешок)" },
+      "consumptionPerUnit": 5.0,
+      "consumptionNote": "PLACEHOLDER — ~5 kg/m2, tasdiqlash kerak",
+      "packageSize": 25,
+      "packageUnit": "kg",
+      "defaultPrice": 45000
+    },
+    {
+      "id": "tile_grout",
+      "name": { "uz": "Zatirka / Fuga (chok uchun)", "ru": "Затирка для швов (фуга)" },
+      "consumptionPerUnit": 0.35,
+      "consumptionNote": "PLACEHOLDER — ~0.35 kg/m2, tasdiqlash kerak",
+      "packageSize": 2,
+      "packageUnit": "kg",
+      "defaultPrice": 35000
+    },
+    {
+      "id": "primer_betonkontakt",
+      "name": { "uz": "Betonkontakt / Grunt", "ru": "Бетоноконтакт / Грунтовка" },
+      "consumptionPerUnit": 0.2,
+      "consumptionNote": "PLACEHOLDER — ~0.2 litr/m2, tasdiqlash kerak",
+      "packageSize": 10,
+      "packageUnit": "litr",
+      "defaultPrice": 130000
+    },
+    {
+      "id": "tile_crosses_svp",
+      "name": { "uz": "Xochiklar va SVP qisqichlar", "ru": "Крестики и СВП зажимы" },
+      "consumptionPerUnit": 8.0,
+      "consumptionNote": "PLACEHOLDER — ~8 dona/m2, tasdiqlash kerak",
+      "packageSize": 100,
+      "packageUnit": "dona",
+      "defaultPrice": 25000
+    }
+  ],
+  "defaultLaborPricePerUnit": 70000,
+  "laborNote": "PLACEHOLDER — so'm/m2, tasdiqlash kerak"
+}

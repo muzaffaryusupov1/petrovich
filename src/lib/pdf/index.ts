@@ -2,6 +2,7 @@ import jsPDF from 'jspdf';
 import type { Estimate, UserProfile } from '../../types';
 import { formatUZS } from '../calc';
 import { getUserProfile } from '../profile';
+import { getJobType } from '../../features/jobTypes/loader';
 
 /**
  * Creates and formats a jsPDF document for the given estimate and master profile.
@@ -79,6 +80,19 @@ export function createPDFDocument(
     doc.setTextColor(...labelColor);
     doc.text(
       lang === 'uz' ? `Manzil: ${estimate.address}` : `Адрес: ${estimate.address}`,
+      margin,
+      y
+    );
+    y += 5;
+  }
+
+  const jobType = getJobType(estimate.jobTypeId);
+  if (jobType) {
+    const jtName = lang === 'uz' ? jobType.name.uz : jobType.name.ru;
+    doc.setFontSize(10);
+    doc.setTextColor(26, 110, 60);
+    doc.text(
+      lang === 'uz' ? `Ish turi: ${jtName}` : `Тип работы: ${jtName}`,
       margin,
       y
     );

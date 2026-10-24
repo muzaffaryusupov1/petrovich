@@ -1,6 +1,11 @@
 {
   "id": "putty_and_paint_walls",
   "name": { "uz": "Shpaklyovka va bo'yash", "ru": "Шпаклёвка и покраска" },
+  "icon": "🎨",
+  "description": {
+    "uz": "Devor va shiftlarni tekislash, shpaklyovka va sifatli bo'yash",
+    "ru": "Выравнивание стен и потолков, шпаклевание и покраска"
+  },
   "unit": "m2",
   "materials": [
     {

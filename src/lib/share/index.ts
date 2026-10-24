@@ -2,6 +2,7 @@ import type { Estimate, UserProfile } from '../../types';
 import { formatUZS } from '../calc';
 import { getUserProfile } from '../profile';
 import { generatePDFBlob } from '../pdf';
+import { getJobType } from '../../features/jobTypes/loader';
 
 /**
  * Format estimate as a clean, readable text message suitable for Telegram / WhatsApp.
@@ -14,10 +15,14 @@ export function buildEstimateShareText(
   const userProfile = profile || getUserProfile();
   const totalArea = (estimate.totalWallArea ?? 0) + (estimate.totalCeilingArea ?? 0);
   const dateStr = new Date(estimate.createdAt).toLocaleDateString(lang === 'uz' ? 'uz-UZ' : 'ru-RU');
+  const jobType = getJobType(estimate.jobTypeId);
+  const jtName = jobType ? (lang === 'uz' ? jobType.name.uz : jobType.name.ru) : '';
+  const jtIcon = jobType?.icon || '🏗️';
 
   if (lang === 'uz') {
     const lines = [
       `📋 SMETA: ${estimate.clientName || 'Mijoz'}`,
+      jtName ? `${jtIcon} Ish turi: ${jtName}` : '',
       estimate.address ? `📍 Manzil: ${estimate.address}` : '',
       `📅 Sana: ${dateStr}`,
       `📐 Jami maydon: ${totalArea.toFixed(1)} m² (${estimate.rooms.length} ta xona)`,
@@ -39,6 +44,7 @@ export function buildEstimateShareText(
   } else {
     const lines = [
       `📋 СМЕТА: ${estimate.clientName || 'Клиент'}`,
+      jtName ? `${jtIcon} Тип работы: ${jtName}` : '',
       estimate.address ? `📍 Адрес: ${estimate.address}` : '',
       `📅 Дата: ${dateStr}`,
       `📐 Общая площадь: ${totalArea.toFixed(1)} м² (${estimate.rooms.length} комн.)`,

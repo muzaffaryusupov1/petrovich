@@ -87,7 +87,12 @@
     "total": "Итого (сум)"
   },
   "jobType": {
-    "putty_and_paint_walls": "Шпаклёвка и покраска"
+    "selectTitle": "Выберите тип работы",
+    "selectSubtitle": "По какому направлению хотите рассчитать смету?",
+    "putty_and_paint_walls": "Шпаклёвка и покраска",
+    "tiling_walls_and_floors": "Укладка плитки и кафеля",
+    "drywall_partition_ceiling": "Монтаж гипсокартона (ГКЛ)",
+    "floor_screed": "Стяжка пола"
   },
   "currency": "сум",
   "errors": {

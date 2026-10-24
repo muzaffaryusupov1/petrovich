@@ -26,6 +26,8 @@ export interface MaterialDef {
 export interface JobTypeDef {
   id: string;
   name: LocalizedString;
+  icon?: string;
+  description?: LocalizedString;
   unit: string; // 'm2'
   materials: MaterialDef[];
   defaultLaborPricePerUnit: number; // UZS per m²

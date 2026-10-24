@@ -1,0 +1,50 @@
+{
+  "id": "floor_screed",
+  "name": { "uz": "Pol quyish (Styajka)", "ru": "Стяжка пола" },
+  "icon": "🏗️",
+  "description": {
+    "uz": "Polni sement-qum qorishmasi bilan tekislash va quyish",
+    "ru": "Выравнивание и заливка пола цементно-песчаной смесью"
+  },
+  "unit": "m2",
+  "materials": [
+    {
+      "id": "cement_bag",
+      "name": { "uz": "Sement (50 kg qop)", "ru": "Цемент (мешок 50 кг)" },
+      "consumptionPerUnit": 15.0,
+      "consumptionNote": "PLACEHOLDER — ~15 kg/m2 (5 sm qatlam uchun), tasdiqlash kerak",
+      "packageSize": 50,
+      "packageUnit": "kg",
+      "defaultPrice": 60000
+    },
+    {
+      "id": "sand_bag",
+      "name": { "uz": "Qum (qoplarda)", "ru": "Песок строительный (мешок)" },
+      "consumptionPerUnit": 40.0,
+      "consumptionNote": "PLACEHOLDER — ~40 kg/m2, tasdiqlash kerak",
+      "packageSize": 50,
+      "packageUnit": "kg",
+      "defaultPrice": 15000
+    },
+    {
+      "id": "beacon_profile",
+      "name": { "uz": "Mayak profili (10mm, 3m)", "ru": "Маячковый профиль (10мм, 3м)" },
+      "consumptionPerUnit": 0.8,
+      "consumptionNote": "PLACEHOLDER — ~0.8 dona/m2, tasdiqlash kerak",
+      "packageSize": 1,
+      "packageUnit": "dona",
+      "defaultPrice": 12000
+    },
+    {
+      "id": "screed_primer",
+      "name": { "uz": "Chuqur kiruvchi gruntovka", "ru": "Грунтовка глубокого проникновения" },
+      "consumptionPerUnit": 0.2,
+      "consumptionNote": "PLACEHOLDER — ~0.2 litr/m2, tasdiqlash kerak",
+      "packageSize": 10,
+      "packageUnit": "litr",
+      "defaultPrice": 120000
+    }
+  ],
+  "defaultLaborPricePerUnit": 35000,
+  "laborNote": "PLACEHOLDER — so'm/m2, tasdiqlash kerak"
+}

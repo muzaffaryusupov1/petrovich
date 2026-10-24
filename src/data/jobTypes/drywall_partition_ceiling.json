@@ -1,0 +1,59 @@
+{
+  "id": "drywall_partition_ceiling",
+  "name": { "uz": "Gipsokarton (GKL) montaji", "ru": "Монтаж гипсокартона (ГКЛ)" },
+  "icon": "📐",
+  "description": {
+    "uz": "Devorlarni qoplash, to'siqlar (peregorodka) va osma shift montaji",
+    "ru": "Обшивка стен, перегородки и подвесные потолки из гипсокартона"
+  },
+  "unit": "m2",
+  "materials": [
+    {
+      "id": "drywall_sheet",
+      "name": { "uz": "Gipsokarton listi (1.2×2.5m)", "ru": "Лист гипсокартона (1.2×2.5м)" },
+      "consumptionPerUnit": 0.35,
+      "consumptionNote": "PLACEHOLDER — ~0.35 list/m2 (1 list = 3 m2), tasdiqlash kerak",
+      "packageSize": 1,
+      "packageUnit": "list",
+      "defaultPrice": 65000
+    },
+    {
+      "id": "drywall_profile",
+      "name": { "uz": "Metall profil (3 metrli)", "ru": "Металлический профиль (3м)" },
+      "consumptionPerUnit": 0.7,
+      "consumptionNote": "PLACEHOLDER — ~2 metr (0.7 dona 3m)/m2, tasdiqlash kerak",
+      "packageSize": 1,
+      "packageUnit": "dona",
+      "defaultPrice": 22000
+    },
+    {
+      "id": "drywall_screws",
+      "name": { "uz": "Samorezlar (metall/gips)", "ru": "Саморезы (металл/гипс)" },
+      "consumptionPerUnit": 25.0,
+      "consumptionNote": "PLACEHOLDER — ~25 dona/m2, tasdiqlash kerak",
+      "packageSize": 100,
+      "packageUnit": "dona",
+      "defaultPrice": 18000
+    },
+    {
+      "id": "drywall_mesh_tape",
+      "name": { "uz": "Serpyanka lenta (choklar uchun)", "ru": "Лента серпянка (для швов)" },
+      "consumptionPerUnit": 1.5,
+      "consumptionNote": "PLACEHOLDER — ~1.5 metr/m2, tasdiqlash kerak",
+      "packageSize": 50,
+      "packageUnit": "metr",
+      "defaultPrice": 25000
+    },
+    {
+      "id": "drywall_joint_filler",
+      "name": { "uz": "Fugenfyuller / Shpaklyovka", "ru": "Фугенфюллер / Шпаклёвка для швов" },
+      "consumptionPerUnit": 0.4,
+      "consumptionNote": "PLACEHOLDER — ~0.4 kg/m2, tasdiqlash kerak",
+      "packageSize": 25,
+      "packageUnit": "kg",
+      "defaultPrice": 90000
+    }
+  ],
+  "defaultLaborPricePerUnit": 50000,
+  "laborNote": "PLACEHOLDER — so'm/m2, tasdiqlash kerak"
+}

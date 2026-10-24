@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { Room, Estimate, MaterialLine } from '../../types';
 import { getJobType, getAllJobTypes } from '../jobTypes/loader';
@@ -306,6 +306,9 @@ export default function EstimateFormPage() {
   const [saving, setSaving] = useState(false);
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const [searchParams] = useSearchParams();
+  const jobTypeParam = searchParams.get('jobType');
+
   // Load existing or create new
   useEffect(() => {
     if (id) {
@@ -314,10 +317,12 @@ export default function EstimateFormPage() {
         else navigate('/', { replace: true });
       });
     } else {
-      const defaultJobType = jobTypes[0].id;
-      setEstimate(newEstimate(defaultJobType));
+      const selectedJobType = (jobTypeParam && getJobType(jobTypeParam))
+        ? jobTypeParam
+        : jobTypes[0].id;
+      setEstimate(newEstimate(selectedJobType));
     }
-  }, [id]);
+  }, [id, jobTypeParam]);
 
   // Autosave draft
   const autosave = useCallback((est: Estimate) => {
@@ -406,7 +411,7 @@ export default function EstimateFormPage() {
           >
             {jobTypes.map((jt) => (
               <option key={jt.id} value={jt.id}>
-                {lang === 'uz' ? jt.name.uz : jt.name.ru}
+                {jt.icon ? `${jt.icon} ` : ''}{lang === 'uz' ? jt.name.uz : jt.name.ru}
               </option>
             ))}
           </select>

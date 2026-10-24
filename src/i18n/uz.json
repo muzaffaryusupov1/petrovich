@@ -87,7 +87,12 @@
     "total": "Jami (so'm)"
   },
   "jobType": {
-    "putty_and_paint_walls": "Shpaklyovka va bo'yash"
+    "selectTitle": "Ish turini tanlang",
+    "selectSubtitle": "Qaysi ish turi bo'yicha hisob-kitob qilmoqchisiz?",
+    "putty_and_paint_walls": "Shpaklyovka va bo'yash",
+    "tiling_walls_and_floors": "Kafel va plitka yotqizish",
+    "drywall_partition_ceiling": "Gipsokarton (GKL) montaji",
+    "floor_screed": "Pol quyish (Styajka)"
   },
   "currency": "so'm",
   "errors": {

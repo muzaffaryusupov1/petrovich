@@ -5,6 +5,7 @@ import { getEstimate, deleteEstimate } from '../../lib/db';
 import { computeEstimate, formatUZS } from '../../lib/calc';
 import { generatePDF } from '../../lib/pdf';
 import { getUserProfile } from '../../lib/profile';
+import { getJobType } from '../jobTypes/loader';
 import { shareEstimate, openTelegramShare, buildEstimateShareText } from '../../lib/share';
 import type { Estimate, UserProfile } from '../../types';
 
@@ -83,6 +84,7 @@ export default function EstimateDetailPage() {
   if (!estimate) return <div className="empty-state"><span>⏳</span></div>;
 
   const totalArea = (estimate.totalWallArea ?? 0) + (estimate.totalCeilingArea ?? 0);
+  const jobType = getJobType(estimate.jobTypeId);
 
   return (
     <div style={{ paddingBottom: 40 }}>
@@ -112,6 +114,12 @@ export default function EstimateDetailPage() {
             {profile.name && (
               <div className="text-primary fw-bold" style={{ fontSize: '0.85rem', marginTop: 4 }}>
                 👷 {t('profile.title')}: {profile.name} {profile.phone ? `(${profile.phone})` : ''}
+              </div>
+            )}
+            {jobType && (
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'var(--color-bg)', padding: '4px 10px', borderRadius: 'var(--radius-sm)', marginTop: 6, fontSize: '0.85rem', fontWeight: 600 }}>
+                <span>{jobType.icon || '🏗️'}</span>
+                <span>{lang === 'uz' ? jobType.name.uz : jobType.name.ru}</span>
               </div>
             )}
             <div className="text-muted" style={{ fontSize: '0.8rem', marginTop: 4 }}>
